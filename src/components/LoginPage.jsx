@@ -1,6 +1,5 @@
-// import axios from 'axios';
-// import { useTranslation } from 'react-i18next';
-import React, { useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import React, { useRef, useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import {
   Row, Card, Col, Form, Button,
@@ -16,9 +15,9 @@ const LoginPage = () => {
   const inputRef = useRef();
   const location = useLocation();
   const navigate = useNavigate();
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
   const { login, password } = useSelector((state) => state.loginData);
-  // console.log('login, password', login, password);
+  const [showData, setShowData] = useState(false);
 
   useEffect(() => {
     inputRef.current.focus();
@@ -41,12 +40,8 @@ const LoginPage = () => {
       auth.logIn();
       const { from } = location.state || { from: { pathname: routes.profilePagePath } };
       navigate(from);
-      // console.log('location.state', location.state);
-      // console.log('location', location);
     },
   });
-
-  console.log(formik.errors);
 
   return (
     <div className="container-fluid h-100">
@@ -60,7 +55,7 @@ const LoginPage = () => {
                     <Form.Control
                       onChange={formik.handleChange}
                       value={formik.values.login}
-                      placeholder="Login"
+                      placeholder={t('loginField')}
                       name="login"
                       id="login"
                       autoComplete="login"
@@ -68,29 +63,36 @@ const LoginPage = () => {
                       required
                       ref={inputRef}
                     />
-                    <Form.Label htmlFor="login">Login</Form.Label>
-                    <Form.Control.Feedback type="valid">Correct login</Form.Control.Feedback>
+                    <Form.Label htmlFor="login">{t('loginField')}</Form.Label>
+                    <Form.Control.Feedback type="valid">{t('correctLogin')}</Form.Control.Feedback>
                   </Form.Group>
                   <Form.Group className="mb-3 form-floating">
                     <Form.Control
                       type="password"
                       onChange={formik.handleChange}
                       value={formik.values.password}
-                      placeholder="Password"
+                      placeholder={t('passwordField')}
                       name="password"
                       id="password"
                       autoComplete="password"
                       isValid={(!formik.errors.password && formik.dirty)}
                       required
                     />
-                    <Form.Label htmlFor="password">Password</Form.Label>
-                    <Form.Control.Feedback type="valid">Correct password</Form.Control.Feedback>
+                    <Form.Label htmlFor="password">{t('passwordField')}</Form.Label>
+                    <Form.Control.Feedback type="valid">{t('correctPassword')}</Form.Control.Feedback>
                   </Form.Group>
-                  <Button disabled={!(formik.isValid && formik.dirty)} type="submit" variant="outline-primary" className="w-100 mb-3">Enter</Button>
+                  <Button disabled={!(formik.isValid && formik.dirty)} type="submit" variant="outline-primary" className="w-100 mb-3">{t('logIn')}</Button>
                 </fieldset>
               </Form>
             </Card.Body>
           </Card>
+          <button
+            onClick={() => setShowData(!showData)}
+            type="button"
+            className="mt-3 data-button"
+          >
+            {showData ? `login: ${login}, password: ${password}` : t('showDataButton')}
+          </button>
         </Col>
       </Row>
     </div>
