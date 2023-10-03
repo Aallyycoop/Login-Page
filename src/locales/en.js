@@ -11,5 +11,8 @@ export default {
     correctLogin: 'Correct login',
     correctPassword: 'Correct password',
     showDataButton: 'Click here to see login data',
+    pageNotFound: "Sorry, this page doesn't exist",
+    returnToLoginPage: 'But you can return to',
+    loginPage: 'Login Page',
   },
 };
