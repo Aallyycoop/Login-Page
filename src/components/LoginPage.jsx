@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import {
   Row, Card, Col, Form, Button,
 } from 'react-bootstrap';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import * as yup from 'yup';
 import useAuth from '../hooks/index.jsx';
@@ -13,7 +13,6 @@ import routes from '../routes.js';
 const LoginPage = () => {
   const auth = useAuth();
   const inputRef = useRef();
-  const location = useLocation();
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { login, password } = useSelector((state) => state.loginData);
@@ -38,8 +37,7 @@ const LoginPage = () => {
     // validateOnChange: true,
     onSubmit: () => {
       auth.logIn();
-      const { from } = location.state || { from: { pathname: routes.profilePagePath } };
-      navigate(from);
+      navigate(routes.profilePagePath());
     },
   });
 
