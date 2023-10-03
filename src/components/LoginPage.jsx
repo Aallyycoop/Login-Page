@@ -35,8 +35,8 @@ const LoginPage = () => {
       password: '',
     },
     validationSchema: loginSchema,
-    validateOnBlur: false,
-    validateOnChange: true,
+    // validateOnBlur: false,
+    // validateOnChange: true,
     onSubmit: () => {
       auth.logIn();
       const { from } = location.state || { from: { pathname: routes.profilePagePath } };
@@ -64,13 +64,14 @@ const LoginPage = () => {
                       name="login"
                       id="login"
                       autoComplete="login"
-                      isInvalid={(formik.errors.login)}
+                      isValid={(!formik.errors.login && formik.dirty)}
                       required
                       ref={inputRef}
                     />
                     <Form.Label htmlFor="login">Login</Form.Label>
+                    <Form.Control.Feedback type="valid">Correct login</Form.Control.Feedback>
                   </Form.Group>
-                  <Form.Group className="mb-4 form-floating">
+                  <Form.Group className="mb-3 form-floating">
                     <Form.Control
                       type="password"
                       onChange={formik.handleChange}
@@ -79,11 +80,11 @@ const LoginPage = () => {
                       name="password"
                       id="password"
                       autoComplete="password"
-                      isInvalid={(formik.errors.password)}
+                      isValid={(!formik.errors.password && formik.dirty)}
                       required
                     />
                     <Form.Label htmlFor="password">Password</Form.Label>
-                    <Form.Control.Feedback type="invalid" className="invalid">Incorrect login or password</Form.Control.Feedback>
+                    <Form.Control.Feedback type="valid">Correct password</Form.Control.Feedback>
                   </Form.Group>
                   <Button disabled={!(formik.isValid && formik.dirty)} type="submit" variant="outline-primary" className="w-100 mb-3">Enter</Button>
                 </fieldset>
